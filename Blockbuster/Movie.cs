@@ -4,35 +4,22 @@ using System.Text;
 
 namespace Blockbuster
 {
-   public abstract class Movie
+   public class Movie
     {
-        //Recipe for creating a class 
-        //1) Properties/Variables 
-        //2) Constructor(s)
-        //3) Method(s) 
-
-        //What do Concrete classes pass to their children? 
-        //1) Properties/Variables - pass down as is 
-        //2) Constructor(s) - pass down as is 
-        //3) Method(s) 
-
-        //Options for passing down methods:
-        //1) Regular Method - as is 
-        //2) Virtual Method - child has the option to override 
-        //3) Add onto a Virtual Method - overide the method, call base in the child, and write the childs own code
-
 
         public string Title { get; set; }
         public Genre Category { get; set; }
         public int Runtime { get; set; }
         public List<string> Scenes { get; set; }
+        public IPlay MoviePlay { get; set;}
 
-        public Movie(string Title, Genre Category, int Runtime, List<string> Scenes)
+        public Movie(string Title, Genre Category, int Runtime, List<string> Scenes, IPlay MoviePlay)
         {
             this.Title = Title;
             this.Category = Category;
             this.Runtime = Runtime;
             this.Scenes = Scenes;
+            this.MoviePlay = MoviePlay;
         }
         
         public void PrintInfo()
@@ -53,7 +40,10 @@ namespace Blockbuster
 
         //Virtual == the child has the option to override the method
         //Abstract == the child MUST override this method
-        public abstract void Play();
+        public void Play()
+        {
+            MoviePlay.Play(Scenes);
+        }
 
         public virtual void PlayWholeMovie()
         {
